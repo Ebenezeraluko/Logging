@@ -1,0 +1,45 @@
+# Alternative approach using syslog driver
+# This sends logs directly to syslog which can then be accessed via nginx
+
+version: '3.8'
+
+services:
+  pruvia-p2p-admin-fe:
+    image: pruvia-p2p-admin-fe:latest
+    container_name: pruvia-p2p-admin-fe-log
+    ports:
+      - "0.0.0.0:3002:3002"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        tag: "pruvia-p2p-admin-fe"
+        syslog-facility: "local0"
+    restart: unless-stopped
+
+  pruvia_loan_app:
+    image: pruvia_loan_app
+    container_name: pruvia_loan_app_log
+    ports:
+      - "0.0.0.0:8081:8081"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        tag: "pruvia_loan_app"
+        syslog-facility: "local1"
+    restart: unless-stopped
+
+  pruvia-client:
+    image: pruvia_client:latest
+    container_name: pruvia-client-log
+    ports:
+      - "0.0.0.0:3003:3003"
+    logging:
+      driver: syslog
+      options:
+        syslog-address: "udp://localhost:514"
+        tag: "pruvia-client"
+        syslog-facility: "local2"
+    restart: unless-stopped
+
