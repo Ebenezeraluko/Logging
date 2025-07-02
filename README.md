@@ -3,7 +3,7 @@ Logging systems
 
 Routing Container Logs Through Nginx
 
-**Steps**:
+## Steps:
 1. Create a setup script: check the script for sub-steps
 2. Create a log aggregator docker-compose.yml
 3. Then follow implementation steps below
